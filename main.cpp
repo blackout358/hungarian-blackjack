@@ -7,13 +7,13 @@
 
 std::string* cardsPtr = NULL;
 std::string* handPtr = NULL;
-std::string* deakerHandPtr = NULL;
+std::string* dealerHandPtr = NULL;
 
 void initial_load() {
   cardsPtr = new std::string("777788889999aaaaAAAAFFFFKKKKSSSS");
   // cardsPtr = cards;
   handPtr = new std::string("");
-  deakerHandPtr = new std::string("");
+  dealerHandPtr = new std::string("");
 }
 
 void deallocate() {
@@ -25,9 +25,9 @@ void deallocate() {
     delete handPtr;
     handPtr = NULL;
   }
-  if (deakerHandPtr) {
-    delete deakerHandPtr;
-    deakerHandPtr = NULL;
+  if (dealerHandPtr) {
+    delete dealerHandPtr;
+    dealerHandPtr = NULL;
   }
 }
 
@@ -112,7 +112,7 @@ void deal_cards() {
     *handPtr += draw;
     draw = draw_card();
     // std::cout << draw;
-    *deakerHandPtr += draw;
+    *dealerHandPtr += draw;
   }
 
   // std::cout << *dealer_hand_Ptr << std::endl;
@@ -149,12 +149,12 @@ int player() {
 }
 
 int dealer() {
-  int score = calculate_score(*deakerHandPtr);
+  int score = calculate_score(*dealerHandPtr);
 
   while (score < 17) {
     // *dealer_hand_Ptr += draw_card();
-    (*deakerHandPtr) += (draw_card());
-    score = calculate_score(*deakerHandPtr);
+    (*dealerHandPtr) += (draw_card());
+    score = calculate_score(*dealerHandPtr);
   }
   return score;
 }
@@ -189,13 +189,13 @@ void print_result(char winner, int playerScore, int dealerScore) {
   }
 
   std::printf("\nPlayer Cards: %s - %d\nDealer Cards: %s - %d\n",
-              handPtr->c_str(), playerScore, deakerHandPtr->c_str(),
+              handPtr->c_str(), playerScore, dealerHandPtr->c_str(),
               dealerScore);
 
   // std::cout << std::endl
   //           << "Player Cards: " << *handPtr << " - " << playerScore
   //           << std::endl
-  //           << "Dealer Cards: " << *deakerHandPtr << " - " << dealerScore
+  //           << "Dealer Cards: " << *dealerHandPtr << " - " << dealerScore
   //           << std::endl;
 
   // Deal Cards
