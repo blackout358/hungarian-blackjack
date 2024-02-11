@@ -7,13 +7,13 @@
 
 std::string* cardsPtr = NULL;
 std::string* handPtr = NULL;
-std::string* dealer_hand_Ptr = NULL;
+std::string* deakerHandPtr = NULL;
 
 void initial_load() {
   cardsPtr = new std::string("777788889999aaaaAAAAFFFFKKKKSSSS");
   // cardsPtr = cards;
   handPtr = new std::string("");
-  dealer_hand_Ptr = new std::string("");
+  deakerHandPtr = new std::string("");
 }
 
 void deallocate() {
@@ -25,9 +25,9 @@ void deallocate() {
     delete handPtr;
     handPtr = NULL;
   }
-  if (dealer_hand_Ptr) {
-    delete dealer_hand_Ptr;
-    dealer_hand_Ptr = NULL;
+  if (deakerHandPtr) {
+    delete deakerHandPtr;
+    deakerHandPtr = NULL;
   }
 }
 
@@ -36,25 +36,25 @@ int get_random_number(int lb, int ub) {
   std::mt19937 eng(rd());  // Seed the generator
   srand((unsigned)time(NULL));
   std::uniform_int_distribution<> distr(lb, ub);  // Define the range
-  int random_number = distr(eng);
-  return random_number;
+  int randomNumber = distr(eng);
+  return randomNumber;
 }
 
-char drawCard() {
+char draw_card() {
   // Random select a num, and get index of that num in cards string mem
-  std::string local_deck = *cardsPtr;
-  int deck_size = local_deck.length();
+  std::string localDeck = *cardsPtr;
+  int deck_size = localDeck.length();
   // size_t deck_size = *cardsPtr.length();
   //   std::cout << deck_size;
   int card_draw = get_random_number(1, deck_size - 1);
 
-  char draw = local_deck[card_draw];
-  std::cout << "Drawing this card: " << local_deck[card_draw] << std::endl;
+  char draw = localDeck[card_draw];
+  std::cout << "Drawing this card: " << localDeck[card_draw] << std::endl;
 
-  local_deck.erase(card_draw, 1);
-  // local_deck.swap("" card_draw);
+  localDeck.erase(card_draw, 1);
+  // localDeck.swap("" card_draw);
   // cardsPtr*.;
-  cardsPtr->assign(local_deck);
+  cardsPtr->assign(localDeck);
   // cardsPtr = new std::
   // std::cout << *cardsPtr << std::endl;
 
@@ -107,12 +107,12 @@ void deal_cards() {
   // std::string local_hand = *handPtr;
   // std::string local_dealer_hand = *dealer_hand_Ptr;
   for (int i = 0; i < 2; i++) {
-    char draw = drawCard();
+    char draw = draw_card();
     // std::cout << draw;
     *handPtr += draw;
-    draw = drawCard();
+    draw = draw_card();
     // std::cout << draw;
-    *dealer_hand_Ptr += draw;
+    *deakerHandPtr += draw;
   }
 
   // std::cout << *dealer_hand_Ptr << std::endl;
@@ -137,7 +137,7 @@ int player() {
     std::cout << std::endl << *handPtr << std::endl;
     std::cout << score << std::endl;
     if (ask_to_draw()) {
-      char draw = drawCard();
+      char draw = draw_card();
       *handPtr += draw;
       std::cout << draw << std::endl;
       score = calculate_score(*handPtr);
@@ -149,31 +149,30 @@ int player() {
 }
 
 int dealer() {
-  int score = calculate_score(*dealer_hand_Ptr);
+  int score = calculate_score(*deakerHandPtr);
 
   while (score < 17) {
-    // *dealer_hand_Ptr += drawCard();
-    (*dealer_hand_Ptr) += (drawCard());
-    score = calculate_score(*dealer_hand_Ptr);
+    // *dealer_hand_Ptr += draw_card();
+    (*deakerHandPtr) += (draw_card());
+    score = calculate_score(*deakerHandPtr);
   }
   return score;
 }
 
-char check_winner(int player_score, int dealer_score) {
-  if (dealer_score == 21)
+char check_winner(int playerScore, int dealerScore) {
+  if (dealerScore == 21)
     return 'd';
-  else if (player_score < 22 && dealer_score > 21)
+  else if (playerScore < 22 && dealerScore > 21)
     return 'p';
-  else if (player_score > 21 && dealer_score > 21)
+  else if (playerScore > 21 && dealerScore > 21)
     return 'n';
-  else if ((player_score < 22 && dealer_score < 22) &&
-           player_score > dealer_score)
+  else if ((playerScore < 22 && dealerScore < 22) && playerScore > dealerScore)
     return 'p';
   else
     return 'd';
 }
 
-void print_result(char winner, int player_score, int dealer_score) {
+void print_result(char winner, int playerScore, int dealerScore) {
   switch (winner) {
     case 'd':
       std::cout << std::endl << "Dealer Wins";
@@ -190,17 +189,17 @@ void print_result(char winner, int player_score, int dealer_score) {
   }
 
   std::printf("\nPlayer Cards: %s - %d\nDealer Cards: %s - %d\n",
-              handPtr->c_str(), player_score, dealer_hand_Ptr->c_str(),
-              dealer_score);
+              handPtr->c_str(), playerScore, deakerHandPtr->c_str(),
+              dealerScore);
 
   // std::cout << std::endl
-  //           << "Player Cards: " << *handPtr << " - " << player_score
+  //           << "Player Cards: " << *handPtr << " - " << playerScore
   //           << std::endl
-  //           << "Dealer Cards: " << *dealer_hand_Ptr << " - " << dealer_score
+  //           << "Dealer Cards: " << *deakerHandPtr << " - " << dealerScore
   //           << std::endl;
 
   // Deal Cards
-  // char draw = drawCard();
+  // char draw = draw_card();
 }
 
 void debug_values() {}
@@ -208,10 +207,10 @@ void debug_values() {}
 void run_game() {
   // std::cout << *cardsPtr << std::endl;
   deal_cards();
-  int player_score = player();
-  int dealer_score = dealer();
-  char winner = check_winner(player_score, dealer_score);
-  print_result(winner, player_score, dealer_score);
+  int playerScore = player();
+  int dealerScore = dealer();
+  char winner = check_winner(playerScore, dealerScore);
+  print_result(winner, playerScore, dealerScore);
 }
 
 int main() {
