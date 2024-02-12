@@ -13,7 +13,7 @@ class Hungarian21 {
  private:
   std::string deck;
   std::string hand;
-  std::string dealer_hand;
+  std::string dealerHand;
 
   void initial_load();
 
@@ -31,9 +31,9 @@ class Hungarian21 {
 
   int dealer();
 
-  char check_winner(int player_score, int dealer_score);
+  char check_winner(int playerScore, int dealerScore);
 
-  void print_result(char winner, int player_score, int dealer_score);
+  void print_result(char winner, int playerScore, int dealerScore);
   void run_game();
 
  public:
