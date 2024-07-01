@@ -1,5 +1,4 @@
 #include "blackjack.h"
-
 #include <iostream>
 #include <random>
 #include <string>
@@ -18,33 +17,21 @@ void Hungarian21::initial_load() {
 }
 
 char Hungarian21::draw_card() {
-  // Random select a num, and get index of that num in cards string mem
-  // std::string local_deck = deck;
   int deckSize = deck.length();
-  // size_t deckSize = *cardsPtr.length();
-  //   std::cout << deckSize;
   int cardDraw = get_random_number(1, deckSize - 1);
 
   char draw = deck[cardDraw];
-  // std::cout << "Drawing this card: " << deck[cardDraw] << std::endl;
 
   deck.erase(cardDraw, 1);
-  // deck.swap("" cardDraw);
-  // cardsPtr*.;
-  // deck->assign(deck);
-  // cardsPtr = new std::
-  // std::cout << *cardsPtr << std::endl;
 
   return draw;
-
-  // Remove the selected num from the cards string
 }
 // Generate random number
 int Hungarian21::get_random_number(int lb, int ub) {
-  std::random_device rd;   // Obtain a random number from hardware
-  std::mt19937 eng(rd());  // Seed the generator
+  std::random_device rd;  // Obtain a random number from hardware
+  std::mt19937 eng(rd()); // Seed the generator
   srand((unsigned)time(NULL));
-  std::uniform_int_distribution<> distr(lb, ub);  // Define the range
+  std::uniform_int_distribution<> distr(lb, ub); // Define the range
   int randomNumber = distr(eng);
   return randomNumber;
 }
@@ -56,53 +43,44 @@ int Hungarian21::calculate_score(std::string hand) {
   }
   for (int i = 0; i < hand.length(); i++) {
     switch (hand[i]) {
-      case '7':
-        /* code */
-        score += 7;
-        break;
-      case '8':
-        score += 8;
-        break;
-      case '9':
-        score += 9;
-        break;
-      case 'a':
-        score += 10;
-        break;
-      case 'A':
-        score += 2;
-        break;
-      case 'F':
-        score += 3;
-        break;
-      case 'K':
-        score += 4;
-        break;
-      case 'S':
-        score += 11;
-        break;
-      default:
-        break;
+    case '7':
+      score += 7;
+      break;
+    case '8':
+      score += 8;
+      break;
+    case '9':
+      score += 9;
+      break;
+    case 'a':
+      score += 10;
+      break;
+    case 'A':
+      score += 2;
+      break;
+    case 'F':
+      score += 3;
+      break;
+    case 'K':
+      score += 4;
+      break;
+    case 'S':
+      score += 11;
+      break;
+    default:
+      break;
     }
   }
   return score;
 }
 
 void Hungarian21::deal_cards() {
-  //
-  // std::string local_hand = hand;
-  // std::string local_dealer_hand = dealerHand;
   for (int i = 0; i < 2; i++) {
     char draw = draw_card();
-    // std::cout << draw;
     hand += draw;
     draw = draw_card();
-    // std::cout << draw;
     dealerHand += draw;
   }
-
-  // std::cout << dealerHand << std::endl;
-  // std::cout << *cardsPtr << std::endl;
 }
 
 bool Hungarian21::ask_to_draw() {
@@ -138,7 +116,6 @@ int Hungarian21::dealer() {
   int score = calculate_score(dealerHand);
 
   while (score < 17) {
-    // dealerHand += draw_card();
     (dealerHand) += (draw_card());
     score = calculate_score(dealerHand);
   }
@@ -160,34 +137,26 @@ char Hungarian21::check_winner(int playerScore, int dealerScore) {
 
 void Hungarian21::print_result(char winner, int playerScore, int dealerScore) {
   switch (winner) {
-    case 'd':
-      std::cout << std::endl << "Dealer Wins";
-      break;
-    case 'p':
-      std::cout << std::endl << "Player Wins";
-      break;
-    case 'b':
-      std::cout << std::endl << "Draw";
-      break;
-    default:
-      std::cout << std::endl << "?";
-      break;
+  case 'd':
+    std::cout << std::endl << "Dealer Wins";
+    break;
+  case 'p':
+    std::cout << std::endl << "Player Wins";
+    break;
+  case 'b':
+    std::cout << std::endl << "Draw";
+    break;
+  default:
+    std::cout << std::endl << "?";
+    break;
   }
-
-  // std::printf("\nPlayer Cards: %s - %d\nDealer Cards: %s - %d\n", hand,
-  //             playerScore, dealerHand, dealerScore);
-
   std::cout << std::endl
             << "Player Cards: " << hand << " - " << playerScore << std::endl
             << "Dealer Cards: " << dealerHand << " - " << dealerScore
             << std::endl;
-
-  // Deal Cards
-  // char draw = draw_card();
 }
 
 void Hungarian21::run_game() {
-  // std::cout << *cardsPtr << std::endl;
   deal_cards();
   int playerScore = player();
   int dealerScore = dealer();
@@ -197,23 +166,20 @@ void Hungarian21::run_game() {
 void Hungarian21::blackjack() {
   initial_load();
   run_game();
-  // deallocate();
 }
 
 void Hungarian21::game_desciption() {
-  // std::cout << std::endl << "Blackjack played with Hungarian cards" << st
   printf("\nBlackjack played with Hungarian cards\n");
 }
 
 void Hungarian21::card_scores() {
-  printf(
-      "\nCard\t-\tValue"
-      "\n7\t-\t7"
-      "\n8\t-\t8"
-      "\n9\t-\t9"
-      "\na\t-\t10"
-      "\nA\t-\t2 -> Alsó"
-      "\nF\t-\t3 -> Felső"
-      "\nK\t-\t4 -> Király"
-      "\nS\t-\t11 -> Ász\n");
+  printf("\nCard\t-\tValue"
+         "\n7\t-\t7"
+         "\n8\t-\t8"
+         "\n9\t-\t9"
+         "\na\t-\t10"
+         "\nA\t-\t2 -> Alsó"
+         "\nF\t-\t3 -> Felső"
+         "\nK\t-\t4 -> Király"
+         "\nS\t-\t11 -> Ász\n");
 }

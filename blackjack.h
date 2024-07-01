@@ -10,7 +10,7 @@ handPtr -> hand
 dealerHandPtr -> dealerHand
 */
 class Hungarian21 {
- private:
+private:
   std::string deck;
   std::string hand;
   std::string dealerHand;
@@ -18,7 +18,6 @@ class Hungarian21 {
   void initial_load();
 
   char draw_card();
-  // Generate random number
   int get_random_number(int lb, int ub);
 
   int calculate_score(std::string hand);
@@ -34,9 +33,10 @@ class Hungarian21 {
   char check_winner(int playerScore, int dealerScore);
 
   void print_result(char winner, int playerScore, int dealerScore);
+
   void run_game();
 
- public:
+public:
   void blackjack();
 
   void game_desciption();
